@@ -39,6 +39,53 @@ public class CamelRoutes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
+        //---------------------------------------------------------------MsgReception-------------
+        // Configuration du composant SQL pour l'accès à la base de données
+        getContext().addComponent("sql", new SqlComponent());
+
+        // Route pour récupérer des informations du canal P2P et les injecter dans la base de données
+        from("direct:recevoirInfos")
+                .log("Réception d'informations : ${body}")
+                .to("sql:INSERT INTO ma_table (colonne1, colonne2) VALUES (#, #)") // Remplacez avec vos colonnes et valeurs
+                .log("Informations injectées dans la base de données avec succès");
+
+        //---------------------------------------------------------------MsgToAmex----------------
+        // Utilisation d'un message store pour la livraison garantie
+        from("direct:envoyerDemande")
+                .log("Envoi d'une demande")
+                .setBody().constant("Ceci est une demande")
+                .to("seda:requete");  // Utilisation de SEDA comme message store
+
+        // Route pour traiter la demande
+        from("seda:requete?size=10")  // Utilisation de SEDA comme message store
+                .log("Traitement de la demande : ${body}")
+                .transform().simple("Réponse à la demande : ${body}")
+                .to("direct:envoyerReponse");
+
+        // Route pour recevoir la réponse
+        from("direct:envoyerReponse")
+                .log("Réception d'une réponse : ${body}");
+
+        //---------------------------------------------------------------MsgToClient--------------
+        // Route pour créer un objet et l'exposer via un service REST
+        from("direct:restReturnObject")
+                .process(exchange -> {
+                    // Créez ici votre objet à envoyer
+                    MonObjet returnClient = new MonObjet();
+                    monObjet.setNom("Exemple");
+                    monObjet.setContent("Ceci est un exemple d'objet REST");
+
+                    // Définissez l'objet dans le corps du message
+                    exchange.getIn().setBody(monObjet);
+                })
+                .to("direct:restReturnObject");
+
+        // Route pour traiter la réponse du service REST (optionnelle)
+        from("direct:restReturnObject")
+                .log("Réponse du service REST : ${body}");
+
+        //---------------------------------------------------------------------------------------
+
         camelContext.setTracing(true);
 
         onException(ExpiredTransitionalTicketException.class)
