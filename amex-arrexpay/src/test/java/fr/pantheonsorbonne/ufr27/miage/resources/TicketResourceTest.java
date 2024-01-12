@@ -1,30 +1,20 @@
 package fr.pantheonsorbonne.ufr27.miage.resources;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-import fr.pantheonsorbonne.ufr27.miage.dao.NoSuchTicketException;
 import fr.pantheonsorbonne.ufr27.miage.dto.*;
-import fr.pantheonsorbonne.ufr27.miage.exception.CustomerNotFoundException;
-import fr.pantheonsorbonne.ufr27.miage.exception.ExpiredTransitionalTicketException;
-import fr.pantheonsorbonne.ufr27.miage.exception.UnsuficientQuotaForVenueException;
 import fr.pantheonsorbonne.ufr27.miage.model.Location;
 import fr.pantheonsorbonne.ufr27.miage.model.Ticket;
 import fr.pantheonsorbonne.ufr27.miage.model.Vendor;
 import fr.pantheonsorbonne.ufr27.miage.model.Venue;
-import fr.pantheonsorbonne.ufr27.miage.service.BookingService;
-import fr.pantheonsorbonne.ufr27.miage.service.TicketingService;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.*;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @QuarkusTestResource(H2DatabaseTestResource.class)
