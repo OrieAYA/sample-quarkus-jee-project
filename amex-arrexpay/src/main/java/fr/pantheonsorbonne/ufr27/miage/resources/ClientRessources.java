@@ -1,5 +1,6 @@
 package fr.pantheonsorbonne.ufr27.miage.resources;
 
+import fr.pantheonsorbonne.ufr27.miage.service.ClientService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.Path;
@@ -9,11 +10,11 @@ import jakarta.ws.rs.PathParam;
 public class ClientRessources {
 
     @Inject
-    VenueService venueService;
+    ClientService clientService;
 
-    @Path("{artistId}/venue/{venueId}")
+    @Path("{artistId}/Client/{clientId}")
     @DELETE
-    public void cancelVenue(@PathParam("artistId") int artistId, @PathParam("venueId") int venueId) {
-        venueService.cancelVenueForArtist(artistId, venueId);
+    public void cancelVenue(@PathParam("montantArgent") float montantArgent, @PathParam("clientId") int clientId) {
+        clientService.ajoutArgent(montantArgent, clientId);
     }
 }
