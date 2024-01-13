@@ -16,15 +16,6 @@ public class ClientService {
     EntityManager em;
 
     @Transactional
-    public void ajoutArgent(Float montantArgent) {
-
-        Client venue = em.find(Client.class);
-
-        Collection<ClientArgent> clientArgents = addArgent(montantArgent);
-
-    }
-
-    @Transactional
     public Client client(Client client) {
         em.persist(client);
         return client;

@@ -6,13 +6,13 @@ import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
-@Path("artist")
+@Path("Client")
 public class ClientRessources {
 
     @Inject
     ClientService clientService;
 
-    @Path("{artistId}/Client/{clientId}")
+    @Path("Client/{clientId}")
     @DELETE
     public void cancelVenue(@PathParam("montantArgent") float montantArgent, @PathParam("clientId") int clientId) {
         clientService.ajoutArgent(montantArgent, clientId);
