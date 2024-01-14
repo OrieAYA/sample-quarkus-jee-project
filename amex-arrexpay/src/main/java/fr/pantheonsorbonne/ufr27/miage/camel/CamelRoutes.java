@@ -54,20 +54,8 @@ public class CamelRoutes extends RouteBuilder {
                 .log("Sending reply: ${body}")
                 .to("direct:sendReplyAmex");
 
-        // Route to send the reply
         from("direct:sendReplyAmex")
                 .log("Sent reply: ${body}");
 
-    }
-
-    private static class ExpiredTransitionalTicketProcessor implements Processor {
-        @Override
-        public void process(Exchange exchange) throws Exception {
-            //https://camel.apache.org/manual/exception-clause.html
-            CamelExecutionException caused = (CamelExecutionException) exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
-
-
-            exchange.getMessage().setBody(((ExpiredTransitionalTicketException) caused.getCause()).getExpiredTicketId());
-        }
     }
 }
