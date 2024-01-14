@@ -12,7 +12,7 @@ public class ClientRessources {
     @Inject
     ClientService clientService;
 
-    @Path("Client/{clientId}")
+    @Path("Client/{clientId}/{montantArgent}")
     @DELETE
     public void cancelVenue(@PathParam("montantArgent") float montantArgent, @PathParam("clientId") int clientId) {
         clientService.ajoutArgent(montantArgent, clientId);

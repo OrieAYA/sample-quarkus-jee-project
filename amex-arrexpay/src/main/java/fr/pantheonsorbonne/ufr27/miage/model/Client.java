@@ -12,7 +12,7 @@ public class Client {
 
     private float montant_argent;
 
-    public Client(Integer idClient,Integer num_carte,Float montant_argent) {
+    public Client(int idClient,int num_carte,float montant_argent) {
         this.idClient = idClient;
         this.num_carte = num_carte;
         this.montant_argent = montant_argent;
