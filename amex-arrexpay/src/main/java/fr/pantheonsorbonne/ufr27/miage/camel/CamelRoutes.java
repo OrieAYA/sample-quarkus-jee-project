@@ -52,10 +52,10 @@ public class CamelRoutes extends RouteBuilder {
                     exchange.setProperty("idClient", cashBack.getIdClient());
                 })
                 .log("Sending reply: ${body}")
-                .to("direct:sendReply");
+                .to("direct:sendReplyAmex");
 
         // Route to send the reply
-        from("direct:sendReply")
+        from("direct:sendReplyAmex")
                 .log("Sent reply: ${body}");
 
     }
