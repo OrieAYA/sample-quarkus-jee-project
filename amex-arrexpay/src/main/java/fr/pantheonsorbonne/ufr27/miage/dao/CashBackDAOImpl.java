@@ -17,7 +17,7 @@ public class CashBackDAOImpl implements CashBackDAO {
     public Double findCashback(int idClient) throws CustomerNotFoundException {
         //check if client exist
         if (! em.createQuery("Select c from CashBack c where c.idClient=:idClient", CashBack.class).setParameter("idClient", idClient).getResultList().isEmpty()) {
-            return em.createQuery("Select sum(c.tauxCashback) from CashBack c where c.idClient=:idClient", Double.class).setParameter("idClient", idClient).getSingleResult();
+            return em.createQuery("Select c.montantCashback from CashBack c where c.idClient=:idClient", Double.class).setParameter("idClient", idClient).getSingleResult();
         }
         else {
             throw new CustomerNotFoundException(idClient);

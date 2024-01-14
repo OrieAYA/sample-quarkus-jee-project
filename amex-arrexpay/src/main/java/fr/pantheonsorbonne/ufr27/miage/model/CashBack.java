@@ -5,20 +5,22 @@ import jakarta.persistence.*;
 @Entity
 public class CashBack {
 
-    @Id
-    @JoinColumn(name = "idTransaction")
+
     private Integer idTransaction;
 
-    @JoinColumn(name = "idClient")
+    @Id
     private Integer idClient;
 
     @Column(name = "tauxCashback", nullable = false)
     private float tauxCashback;
 
-    public CashBack(Integer idClient, Integer idTransaction, float tauxCashback){
+    private double montantCashback;
+
+    public CashBack(Integer idClient){
         this.idClient=idClient;
-        this.idTransaction=idTransaction;
-        this.tauxCashback=tauxCashback;
+        this.idTransaction=0;
+        this.tauxCashback=15;
+        this.montantCashback=0;
     }
 
     public CashBack() {}
@@ -34,4 +36,8 @@ public class CashBack {
     public Integer getIdTransaction() {return idTransaction;}
 
     public void setIdTransaction(Integer idTransaction) {this.idTransaction = idTransaction;}
+
+    public double getMontantCashback() {return montantCashback;}
+
+    public void setMontantCashback(double montantCashback) {this.montantCashback = montantCashback;}
 }

@@ -27,6 +27,6 @@ public class CamelRoutes extends RouteBuilder {
                 .bean(cashbackGateway, "cashback")
                 .marshal().json()
                 .multicast()
-                .to("file:data/testFolder","sjms2:M1.AMEX.toAMEXPay");
+                .to("sjms2:M1.AMEX.toAMEXPay");
     }
 }

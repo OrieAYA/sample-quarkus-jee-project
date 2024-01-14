@@ -4,6 +4,7 @@ package fr.pantheonsorbonne.ufr27.miage.camel;
 import fr.pantheonsorbonne.ufr27.miage.dto.Client;
 import fr.pantheonsorbonne.ufr27.miage.dto.ConfirmationPayment;
 import fr.pantheonsorbonne.ufr27.miage.dto.InformationForAmex;
+import fr.pantheonsorbonne.ufr27.miage.dto.InformationPayment;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.camel.CamelContext;
@@ -36,6 +37,13 @@ public class CamelRoutes extends RouteBuilder {
         from("direct:validatePayment")
                 .autoStartup(isRouteEnabled)
                 .setExchangePattern(ExchangePattern.InOut)
+                .process(exchange -> {
+                    InformationPayment i = exchange.getIn().getBody(InformationPayment.class);
+                    Map<String, Object> jsonOutput = new HashMap<>();
+                    jsonOutput.put("idClient", i.getClient().getIdClient());
+                    jsonOutput.put("prix",(double) i.getPrice());
+                    exchange.getIn().setBody(jsonOutput);
+                })
                 .marshal().json()
                 .to("sjms2:M1.payment.validate?exchangePattern=InOut")
                 .unmarshal().json(ConfirmationPayment.class);
@@ -57,14 +65,14 @@ public class CamelRoutes extends RouteBuilder {
                 .to("file:data/folder","sjms2:M1.AMEX.amex");
 
         //A ENLEVER QUAND LA PARTIE DE SIMON MARCHERA
-        from("sjms2:M1.payment.validate?exchangePattern=InOut")
+        /*from("sjms2:M1.payment.validate?exchangePattern=InOut")
                 .process(exchange -> {
                     Map<String, Object> jsonOutput = new HashMap<>();
                     jsonOutput.put("idTransaction", 0);
                     jsonOutput.put("transactionStatus", true);
                     exchange.getIn().setBody(jsonOutput);
                 })
-                .marshal().json();
+                .marshal().json();*/
 
         //only for test
         /*

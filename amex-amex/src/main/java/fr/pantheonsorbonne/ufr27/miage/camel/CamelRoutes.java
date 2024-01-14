@@ -74,35 +74,7 @@ public class CamelRoutes extends RouteBuilder {
                     exchange.getIn().setBody(jsonOutput);
                 })
                 .marshal().json()
-                .to("sjms2:M1.AMEX.toAMEXCashback","file:data/folderToSlim");
+                .to("sjms2:M1.AMEX.toAMEXCashback");
 
-        //A METTRE EN COMMENTAIRE QUAND LA PARTIE DE SIMON FERA S
-        from("sjms2:M1.AMEX.AskTaux?exchangePattern=InOut")
-                .process(exchange -> {
-                    Map<String, Object> jsonOutput = new HashMap<>();
-                    jsonOutput.put("tauxCashback", 15);
-                    jsonOutput.put("idTransaction", 1);
-                    jsonOutput.put("idClient", 1);
-                    exchange.getIn().setBody(jsonOutput);
-                })
-                .marshal().json();
-
-        //PREPARATION PARTIE SIMON ET SELIM
-        /*from("file:data/folder") //from simon
-                .unmarshal().json(Cashback.class)
-                .bean(cashbackGateway, "cashback")
-                .process(exchange -> {
-                    Cashback result = exchange.getIn().getBody(Cashback.class);
-                    Transaction t = transactionGateway.getMontantTransaction(result.getIdTransaction());
-                    Map<String, Object> jsonOutput = new HashMap<>();
-                    jsonOutput.put("montant", t.getMontantTransaction());
-                    jsonOutput.put("idClient", result.getIdClient());
-                    jsonOutput.put("taux", result.getTauxCashback());
-                    exchange.getIn().setBody(jsonOutput);
-                })
-                .marshal().json()
-                .multicast()
-                .to("sjms2:M1.AMEX.toAMEXCashback","file:data/folderToSlim");
-        //.to("file:data/folderToSlim");*/
     }
 }
