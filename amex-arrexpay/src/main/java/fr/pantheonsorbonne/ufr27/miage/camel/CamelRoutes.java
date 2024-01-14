@@ -1,16 +1,12 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.pantheonsorbonne.ufr27.miage.model.CashBack;
 import fr.pantheonsorbonne.ufr27.miage.service.CashbackService;
-import io.vertx.core.json.JsonObject;
-import org.apache.camel.CamelContext;
-import org.apache.camel.builder.RouteBuilder;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 
 import java.util.HashMap;
@@ -27,7 +23,7 @@ public class CamelRoutes extends RouteBuilder {
     CashbackService cashbackService;
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
 
         camelContext.setTracing(true);
 
