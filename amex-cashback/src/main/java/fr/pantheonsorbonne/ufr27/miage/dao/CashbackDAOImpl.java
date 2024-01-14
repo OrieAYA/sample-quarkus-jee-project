@@ -13,14 +13,14 @@ public class CashbackDAOImpl implements CashbackDAO{
     EntityManager em;
 
     @Override
-    public Cashback CreateNewCashback(Integer idClient, double taux, double montant) {
+    public Cashback createNewCashback(Integer idClient, double taux, double montant) {
         Cashback c = new Cashback(idClient,taux, montant);
         em.persist(c);
         return c;
     }
 
     @Override
-    public Cashback FindCashback(Integer idCashback) {
+    public Cashback findCashback(Integer idCashback) {
         return null;
     }
 }

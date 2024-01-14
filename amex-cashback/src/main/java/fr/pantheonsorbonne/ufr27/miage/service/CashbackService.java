@@ -14,6 +14,6 @@ public class CashbackService {
 
     @Transactional
     public Cashback cashback(Cashback c) {
-        return cdi.CreateNewCashback(c.getIdClient(),c.getTaux(),c.getMontant());
+        return cdi.createNewCashback(c.getIdClient(),c.getTaux(),c.getMontant());
     }
 }
