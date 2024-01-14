@@ -1,0 +1,1 @@
+INSERT INTO CashBack (idClient, idTransaction, montantCashback, tauxCashback) VALUES (456, 555, 28, 1);
