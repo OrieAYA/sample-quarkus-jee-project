@@ -33,17 +33,19 @@ AmericanExpressPay -> AmericanExpress : envoyer le taux
 AmericanExpress -> CashbackService : envoyer le montant et le taux 
 CashbackService -> CashbackService   : calculer l'avantage
 CashbackService -> AmericanExpressPay : donner le montant du cashback (en $)
-AmericanExpressPay -> Client : envoyer mail avec informations cashback
 AmericanExpress -> Marketing : transmettre les informations du client
 end 
 
 Client -> AmericanExpressPay : consulter le montant de cashback
 ```
-![](sequenceDiag.png)
+![](seqDiag.png)
 
 ## Schéma relationnel
 susceptible d’évoluer en fonction des besoins
 ![](EER.png)
+
+## Modélisation de la base de données 
+![](bdModel.png)
 
 ## Exigences fonctionnelles
 1. **Enregistrement des Transactions :**
