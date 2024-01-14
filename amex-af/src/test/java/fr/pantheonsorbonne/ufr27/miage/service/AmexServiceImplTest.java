@@ -17,9 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class AmexServiceImplTest {
 
     @Inject
-    AmexService amexService;
-
-    @Inject
     CamelContext camelContext;
 
     @Test

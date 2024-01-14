@@ -3,7 +3,6 @@ package fr.pantheonsorbonne.ufr27.miage.service;
 import fr.pantheonsorbonne.ufr27.miage.model.Client;
 import fr.pantheonsorbonne.ufr27.miage.model.Transaction;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
