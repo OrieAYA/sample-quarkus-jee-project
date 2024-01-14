@@ -6,7 +6,6 @@ import jakarta.inject.Inject;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import fr.pantheonsorbonne.ufr27.miage.camel.ClientGateway;
 
 import java.util.LinkedHashMap;
 
@@ -20,7 +19,7 @@ public class CamelRoutes extends RouteBuilder {
 
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
 
         camelContext.setTracing(true);
 
@@ -36,7 +35,5 @@ public class CamelRoutes extends RouteBuilder {
                     client.setGenre((String) jsonMap.get("genre"));
                     clientGateway.client(client);
                 });
-
-
     }
 }

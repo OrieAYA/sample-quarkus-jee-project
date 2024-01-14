@@ -12,14 +12,14 @@ public class ClientDAOImpl implements ClientDAO{
     EntityManager em;
 
     @Override
-    public Client CreateNewClient(Integer idClient, String genre, Integer age, String profession) {
+    public Client createNewClient(Integer idClient, String genre, Integer age, String profession) {
         Client c = new Client(idClient,genre,age,profession);
         em.persist(c);
         return c;
     }
 
     @Override
-    public Client FindClient(Integer idClient) {
+    public Client findClient(Integer idClient) {
         return null; //ToDo
     }
 }
