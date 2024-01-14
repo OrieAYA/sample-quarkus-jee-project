@@ -42,8 +42,8 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
-        //from("sjms2:M1.AMEX.amex")
-        from("file:data/testFolder")
+        from("sjms2:M1.AMEX.amex")
+        //from("file:data/testFolder")
                 .wireTap("sjms2:M1.AMEX.clientsmkt")
                 .unmarshal().json(JsonLibrary.Jackson, LinkedHashMap.class)
                 .process(exchange -> {
@@ -82,7 +82,7 @@ public class CamelRoutes extends RouteBuilder {
                     Map<String, Object> jsonOutput = new HashMap<>();
                     jsonOutput.put("tauxCashback", 15);
                     jsonOutput.put("idTransaction", 1);
-                    jsonOutput.put("idClient", 2);
+                    jsonOutput.put("idClient", 1);
                     exchange.getIn().setBody(jsonOutput);
                 })
                 .marshal().json();

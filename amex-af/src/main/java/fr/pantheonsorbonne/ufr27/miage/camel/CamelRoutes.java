@@ -1,7 +1,9 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
+import fr.pantheonsorbonne.ufr27.miage.dto.Client;
 import fr.pantheonsorbonne.ufr27.miage.dto.ConfirmationPayment;
+import fr.pantheonsorbonne.ufr27.miage.dto.InformationForAmex;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.camel.CamelContext;
@@ -40,9 +42,19 @@ public class CamelRoutes extends RouteBuilder {
 
         from("direct:sendToAmex")
                 .autoStartup(isRouteEnabled)
+                .process(exchange -> {
+                    InformationForAmex i = exchange.getIn().getBody(InformationForAmex.class);
+                    Map<String, Object> jsonOutput = new HashMap<>();
+                    jsonOutput.put("idClient", i.getClient().getIdClient());
+                    jsonOutput.put("age", i.getClient().getAge());
+                    jsonOutput.put("profession",i.getClient().getProfession());
+                    jsonOutput.put("genre",i.getClient().getGenre());
+                    jsonOutput.put("prix",(double) i.getPrice());
+                    exchange.getIn().setBody(jsonOutput);
+                })
                 .marshal().json()
-                .to("file:data/folder");
-                //.to("sjms2:M1.AMEX.amex");
+                .multicast()
+                .to("file:data/folder","sjms2:M1.AMEX.amex");
 
         //A ENLEVER QUAND LA PARTIE DE SIMON MARCHERA
         from("sjms2:M1.payment.validate?exchangePattern=InOut")
