@@ -12,7 +12,6 @@
     <module>amex-amex</module>
     <module>amex-arrexpay</module>
     <module>amex-cashback</module>
-    <module>amex-commons</module>
     <module>amex-mkt</module>
   </modules>
   <dependencyManagement>
