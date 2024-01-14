@@ -18,9 +18,4 @@ public class CashbackDAOImpl implements CashbackDAO{
         em.persist(c);
         return c;
     }
-
-    @Override
-    public Cashback findCashback(Integer idCashback) {
-        return null;
-    }
 }

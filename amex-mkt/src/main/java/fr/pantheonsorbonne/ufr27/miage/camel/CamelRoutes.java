@@ -23,7 +23,6 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
-        //from("sjms2:M1.AMEX.clientsmkt")
         from("sjms2:M1.AMEX.clientsmkt")
                 .unmarshal().json(JsonLibrary.Jackson, LinkedHashMap.class)
                 .process(exchange -> {

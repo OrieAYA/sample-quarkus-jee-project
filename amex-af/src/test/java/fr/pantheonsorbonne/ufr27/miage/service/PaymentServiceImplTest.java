@@ -71,6 +71,7 @@ public class PaymentServiceImplTest {
     @Test
     void should_return_TechnicalError(){
         Mockito.when(camelContext.createProducerTemplate()).thenReturn(new FakeProducerTemplate(camelContext));
+
         InformationPayment informationPayment = new InformationPayment();
         ConfirmationPayment confirmationPayment = paymentService.pay(informationPayment);
 

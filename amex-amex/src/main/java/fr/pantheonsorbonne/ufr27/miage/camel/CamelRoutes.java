@@ -2,7 +2,6 @@ package fr.pantheonsorbonne.ufr27.miage.camel;
 
 import fr.pantheonsorbonne.ufr27.miage.model.Cashback;
 import fr.pantheonsorbonne.ufr27.miage.model.Client;
-import fr.pantheonsorbonne.ufr27.miage.camel.ClientGateway;
 import fr.pantheonsorbonne.ufr27.miage.model.Transaction;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -10,21 +9,13 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.print.attribute.IntegerSyntax;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ApplicationScoped
 public class CamelRoutes extends RouteBuilder {
-
-    @ConfigProperty(name = "camel.routes.enabled", defaultValue = "true")
-    boolean isRouteEnabled;
-
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.jmsPrefix")
-    String jmsPrefix;
     @Inject
     CamelContext camelContext;
 
@@ -38,12 +29,11 @@ public class CamelRoutes extends RouteBuilder {
     CashbackGateway cashbackGateway;
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
 
         camelContext.setTracing(true);
 
         from("sjms2:M1.AMEX.amex")
-        //from("file:data/testFolder")
                 .wireTap("sjms2:M1.AMEX.clientsmkt")
                 .unmarshal().json(JsonLibrary.Jackson, LinkedHashMap.class)
                 .process(exchange -> {
@@ -61,7 +51,7 @@ public class CamelRoutes extends RouteBuilder {
                 .bean(transactionGateway, "transaction")
                 .setExchangePattern(ExchangePattern.InOut)
                 .marshal().json()
-                .to("sjms2:M1.AMEX.AskTaux?exchangePattern=InOut") //ENVOYER ET RECEVOIR DE LA PART DE SIMON
+                .to("sjms2:M1.AMEX.AskTaux?exchangePattern=InOut")
                 .unmarshal().json(Cashback.class)
                 .bean(cashbackGateway, "cashback")
                 .process(exchange -> {

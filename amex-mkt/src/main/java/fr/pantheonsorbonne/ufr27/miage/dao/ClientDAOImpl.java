@@ -17,9 +17,4 @@ public class ClientDAOImpl implements ClientDAO{
         em.persist(c);
         return c;
     }
-
-    @Override
-    public Client findClient(Integer idClient) {
-        return null; //ToDo
-    }
 }

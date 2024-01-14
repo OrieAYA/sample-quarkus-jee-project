@@ -12,7 +12,7 @@ public class TransactionGateway {
     @Inject
     TransactionService transactionService;
 
-    public Transaction transaction(Exchange e){//Integer idClient) {
+    public Transaction transaction(Exchange e){
         Integer idClient =(Integer) e.getProperty("idClient");
         return transactionService.transaction(idClient);
     }

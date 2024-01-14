@@ -35,13 +35,13 @@ class TransactionServiceTest {
         Transaction expectedTransaction = new Transaction(idClient, 100.0);
 
         // Configure le comportement simulé du TransactionDAO
-        when(transactionDAO.FindTransaction(idClient)).thenReturn(expectedTransaction);
+        when(transactionDAO.findTransaction(idClient)).thenReturn(expectedTransaction);
 
         // Appel de la méthode de service
         Transaction result = transactionService.transaction(idClient);
 
         // Vérifie que la méthode FindTransaction de TransactionDAO a été appelée avec le bon argument
-        verify(transactionDAO, times(1)).FindTransaction(idClient);
+        verify(transactionDAO, times(1)).findTransaction(idClient);
 
         // Vérifie que le résultat renvoyé par le service est le même objet que celui simulé par TransactionDAO
         assertSame(expectedTransaction, result);

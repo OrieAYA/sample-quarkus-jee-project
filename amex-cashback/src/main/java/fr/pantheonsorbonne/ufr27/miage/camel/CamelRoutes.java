@@ -20,7 +20,6 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
-        //from("file:data/folder")
         from("sjms2:M1.AMEX.toAMEXCashback")
                 .unmarshal().json(Cashback.class)
                 .bean(cashbackGateway, "cashback")
